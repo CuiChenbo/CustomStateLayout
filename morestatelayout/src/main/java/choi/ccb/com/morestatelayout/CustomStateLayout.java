@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-public class CustomStateLayout extends RelativeLayout {
+/**
+ * ChenboCui
+ */
+public class CustomStateLayout extends RelativeLayout implements View.OnClickListener {
 
     private Context context;
-    private final int NORMAL = 0;
-    private final int LOADING = 1;
-    private final int LOADFAIL = 2;
-    private final int LOADERROR = 3;
-    private final int LOADEMPTY = 4;
+    private final int NORMAL = 0;    //常规状态
+    private final int LOADING = 1;   //加载中状态
+    private final int LOADFAIL = 2;  //加载失败状态
+    private final int LOADERROR = 3; //加载错误状态
+    private final int LOADEMPTY = 4; //内容为空状态
 
     public CustomStateLayout(Context context) {
         super(context);
@@ -40,6 +43,7 @@ public class CustomStateLayout extends RelativeLayout {
     private LayoutInflater inflate;
     private void init(){
         inflate = LayoutInflater.from(context);
+        setOnClickListener(this);
     }
 
 
@@ -109,6 +113,9 @@ public class CustomStateLayout extends RelativeLayout {
         }
     }
 
+    public void hideAllState(){
+        setState(NORMAL);
+    }
 
     public void showLoadIng(){
         setState(LOADING);
@@ -122,49 +129,63 @@ public class CustomStateLayout extends RelativeLayout {
     public void showLoadEmpty(){
         setState(LOADEMPTY);
     }
-    public void hideAllState(){
-        setState(NORMAL);
-    }
 
 
     private void setState(int state){
          switch (state){
              case NORMAL :
+                 clickEnable = false;
                  hideLoadIng();
                  hideLoadFail();
                  hideLoadError();
                  hideLoadEmpty();
                  break;
              case LOADING :
+                 clickEnable = false;
                  setLoadIng();
                  hideLoadFail();
                  hideLoadError();
                  hideLoadEmpty();
                  break;
              case LOADFAIL :
+                 clickEnable = true;
                  hideLoadIng();
                  setLoadFail();
                  hideLoadError();
                  hideLoadEmpty();
                  break;
              case LOADERROR:
+                 clickEnable = true;
                  hideLoadIng();
                  hideLoadFail();
                  setLoadError();
                  hideLoadEmpty();
                  break;
              case LOADEMPTY:
+                 clickEnable = true;
                  hideLoadIng();
                  hideLoadFail();
                  hideLoadError();
                  setLoadEmpty();
                  break;
               default:
-                  hideLoadIng();
-                  hideLoadFail();
-                  hideLoadError();
-                  hideLoadEmpty();
+                  hideAllState();
                   break;
          }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (clickEnable){
+            if (listener != null) {
+                hideAllState();
+                listener.onClick(view);
+            }
+        }
+    }
+    private boolean clickEnable = false;
+    private View.OnClickListener listener;
+    public void setLayoutClickListener(OnClickListener listener) {
+        this.listener = listener;
     }
 }
