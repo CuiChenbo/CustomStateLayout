@@ -1,10 +1,12 @@
 package choi.ccb.com.customstatelayout;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import choi.ccb.com.customstatelayout.view.TopDialog;
 import choi.ccb.com.morestatelayout.CustomStateLayout;
 
 
@@ -26,7 +28,8 @@ public class CustomLayoutStateActivity extends AppCompatActivity implements View
         mCustomStateLayout.setLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CustomLayoutStateActivity.this,"点我",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CustomLayoutStateActivity.this,"点我",Toast.LENGTH_SHORT).show();
+                showD();
             }
         });
     }
@@ -50,5 +53,10 @@ public class CustomLayoutStateActivity extends AppCompatActivity implements View
                 mCustomStateLayout.showLoadEmpty();
                 break;
         }
+    }
+
+    private void showD(){
+        TopDialog dialogFragment = new TopDialog();
+       dialogFragment.show(getSupportFragmentManager(),"");
     }
 }
