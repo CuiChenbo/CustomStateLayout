@@ -1,7 +1,7 @@
 # CustomStateLayout
 可定制状态布局，多种状态布局； 可用于网络加载时布局的变化；  
  类库拿走即用，可以自己定制各种状态的UI；代码思路清晰，有兴趣下载下来看看；  
- https://blog.csdn.net/qq_35605213/article/details/85301186
+ 效果图和详解：https://blog.csdn.net/qq_35605213/article/details/85301186
 
    @Override  
     public void onClick(View view) {  
